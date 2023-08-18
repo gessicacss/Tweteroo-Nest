@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from './entities/user.entities';
 import { Tweet } from './entities/tweet.entities';
 import { CreateUserDTO } from './dtos/createUserDTO';
@@ -49,5 +53,15 @@ export class AppService {
     const endIndex = startIndex + tweetsPerPage;
     const latestTweets = tweetsReverse.slice(startIndex, endIndex);
     return latestTweets;
+  }
+
+  getUserTweets(username: string) {
+    const userTweets = this.tweets.filter(
+      (tweet) => tweet.username === username,
+    );
+    if (!userTweets) {
+      return [];
+    }
+    return userTweets;
   }
 }
